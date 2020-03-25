@@ -26,13 +26,10 @@
                 <a href="/">Bienvenido <strong>{{user.first_name}}</strong></a>
             </li>
             <li>
-                <a href="/" title="Lista legos">Lista legos</a>
+                <a href="/" title="Lista legos">Lista asignaturas</a>
             </li>
             <li>
                 <a href="/recomendador/" title="Recomendador">Recomendador</a>
-            </li>
-            <li>
-                <a href="/perfil/" title="Perfil">Perfil</a>
             </li>
             <li>
                 <a href="/logout/" title="Cerrar sesión">Cerrar sesión</a>
@@ -42,17 +39,16 @@
 
     <div class="container">
         <header class="page-header">
-            <h1 class="page-title" title="Legos">LEGOS</h1>
+            <h1 class="page-title" title="Legos">Asignaturas</h1>
         </header>
         <div class="row">
             <div class="col">
                 <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">Id Producto</th>
+                        <th scope="col">Código</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Calificación</th>
-                        <th scope="col">Ver más</th>
                         <th scope="col">Calificar</th>
                       </tr>
                     </thead>
@@ -61,7 +57,6 @@
                         <td scope="row">0001</td>
                         <td>Lego</td>
                         <td>-</td>
-                        <td><button class="btn btn-primary" title="Ver Mas" data-toggle="modal"  data-target='#verMas'>+</button></td>
                         <td><button class="btn btn-success" title="Calificar" data-toggle="modal"  data-target='#calificar'>Calificar</button></td>
                       </tr>
                     </tbody>
@@ -80,14 +75,15 @@
                 </div>
                 <div class="modal-body">
                     <form id="calificaciones" method="POST">
+                        {% csrf_token%}
                         <div class="form-group">
-                            <label>* Id Producto:</label>
+                            <label>* Código:</label>
                             <input name="idProducto" type="text" required disabled
                                 class="form-control"
                                 />
                         </div>
                         <div class="form-group">
-                            <label>* Calificacion(0 a 10):</label>
+                            <label>* Calificación(0 a 10):</label>
                             <input name="calificacion" type="number" required
                                 class="form-control"
                                 min="0" max="10"
@@ -98,57 +94,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" form="calificaciones" class="btn btn-primary">Enviar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id='verMas' tabIndex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><b> ...nombre</b></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Id Producto</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Nombre</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Link 1</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Link 2</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Categoria</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Precio</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b># Piezas</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto"><b>Observaciones</b></div>
-                            <div class="col-md-6 ml-auto">...</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>

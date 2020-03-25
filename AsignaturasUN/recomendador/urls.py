@@ -22,7 +22,5 @@ urlpatterns = [
     url(r'register/', views.register, name="register"),
     url(r'logout/', views.logoutUser, name="logout"),
     url(r'recomendador/', views.recomendador, name="logout"),
-    url(r'perfil/', views.perfil, name="logout"),
     url(r'^', views.indexView, name="index"),
-    
 ]
