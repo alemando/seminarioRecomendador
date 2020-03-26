@@ -9,7 +9,7 @@ def recomendacion(usuario):
         array.append([rate.usuario_id, rate.asignatura_id, rate.calificacion])
     
     df = pd.DataFrame(data=array)
-    reader = Reader(rating_scale=(1, 10))
+    reader = Reader(rating_scale=(0, 10))
     data = Dataset.load_from_df(df, reader)
     trainingSet = data.build_full_trainset()
     param_grid = {
