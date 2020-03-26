@@ -53,13 +53,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td scope="row">0001</td>
-                        <td>Lego</td>
-                        <td>-</td>
-                        <td><button class="btn btn-success" title="Calificar" data-toggle="modal"  data-target='#calificar'>Calificar</button></td>
-                      </tr>
+                        {% for asignatura in asignaturas%}
+                        <tr>
+                            <td scope="row">{{asignatura.codigo}}</td>
+                            <td>{{asignatura.nombre}}</td>
+                            <td>{{asignatura.calificacion_vieja}}</td>
+                            <td><button class="btn btn-success calificacion" title="Calificar" data-toggle="modal"  data-calificacion={{asignatura.calificacion_vieja}}  data-target='#calificar' data-codigo={{asignatura.codigo}} data-nombre="{{asignatura.nombre}}">Calificar</button></td>
+                        </tr>
+                        {% endfor%}
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -68,7 +71,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><b>Calificar ...nombre</b></h5>
+                    <h5 class="modal-title"><b id="nombre_asignatura">Calificar ...nombre</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -78,13 +81,14 @@
                         {% csrf_token%}
                         <div class="form-group">
                             <label>* Código:</label>
-                            <input name="idProducto" type="text" required disabled
+                            <label id="codigo_desplegado">...</label>
+                            <input id="codigo" name="codigo" type="hidden" required
                                 class="form-control"
                                 />
                         </div>
                         <div class="form-group">
                             <label>* Calificación(0 a 10):</label>
-                            <input name="calificacion" type="number" required
+                            <input id="calificacion" name="calificacion" type="number" required
                                 class="form-control"
                                 min="0" max="10"
                                 />
@@ -103,6 +107,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="{% static 'nav.js' %}"></script>
+    <script src="{% static 'funciones.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 </body>
 </html>

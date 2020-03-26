@@ -14,7 +14,7 @@ class Asignatura(models.Model):
 
 #Clase que asocia la asignatura a el usuario y la calificacion otorgada
 class Calificacion(models.Model):
-    producto = models.ForeignKey(Asignatura, on_delete=models.CASCADE,)
+    asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE,)
     calificacion = models.IntegerField()
     usuario =  models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -9,12 +9,37 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth import logout
+from recomendador.models import Asignatura, Calificacion
+from recomendador.rate import recomendacion
 
 # Create your views here.
 
 @login_required
 def indexView(request):
-    return render(request, "index.html")
+    usuario_actual = User.objects.get(username = request.user)
+    if request.method == "POST":
+        asignatura_obj = Asignatura.objects.get(codigo=request.POST.get("codigo"))
+        calificacion_usuario = request.POST.get("calificacion")
+        try:
+            calificacion_vieja = Calificacion.objects.get(usuario_id= usuario_actual.id, asignatura_id = request.POST.get("codigo"))
+            calificacion_vieja.calificacion = calificacion_usuario
+            calificacion_vieja.save()
+        except Calificacion.DoesNotExist as e:
+            Calificacion.objects.create(asignatura = asignatura_obj, calificacion= calificacion_usuario, usuario = usuario_actual)
+            
+
+    asig = Asignatura.objects.all().filter(estado=True)
+    
+    for asignatura in asig:
+        try:
+            calificacion_vieja = Calificacion.objects.get(usuario_id= usuario_actual.id, asignatura_id = asignatura.codigo)
+            asignatura.calificacion_vieja = calificacion_vieja.calificacion
+            
+        except Calificacion.DoesNotExist as e:
+            asignatura.calificacion_vieja = '-'
+            
+        
+    return render(request, "index.html", {'asignaturas' : asig})
 
 
 def logoutUser(request):
@@ -35,4 +60,7 @@ def register(request):
     return render(request, "register.html")
 
 def recomendador(request):
-    return render(request, "recomendacion.html")
+
+    usuario_actual = User.objects.get(username = request.user)
+    asignaturas = recomendacion(usuario_actual)
+    return render(request, "recomendacion.html", {'asignaturas' : asignaturas[0:5]})
